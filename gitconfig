@@ -1,0 +1,39 @@
+[user]
+  name = Lucas Marques
+  email = lucas.smarques@outlook.com
+
+[alias]
+  a = add
+  ap = add -p
+  can = commit -S --amend --no-edit
+  cm = commit -S -m
+  co = checkout
+  d = diff
+  la = "!git config -l | grep alias | cut -c 7-"
+  ls = "!git log --pretty=format:'%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]' --decorate | less -r"
+  ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+  pullr = pull --rebase
+  pf = push --force
+  rb = rebase
+  rt = reset
+  st = status
+  wip = commit -am "WIP"
+  bwip = reset HEAD~1
+  kick = "!f() { git push origin $(git rev-parse --abbrev-ref HEAD):$1 --force; }; f"
+  coforno = "!f() { git fetch && git checkout forno &&  git reset --hard origin/forno; }; f"
+[core]
+  editor = nvim
+  excludesfile = ~/.gitignore
+  pager = delta
+  ; pager = diff-so-fancy | less --tabs=4 -rFX
+[interactive]
+  diffFilter = delta --color-only
+[pull]
+  rebase = true
+; [url "git@github.com:"]
+;   insteadOf = https://github.com/
+
+[delta]
+  syntax-theme = base16
+  line-numbers = true
+  ; side-by-side = true

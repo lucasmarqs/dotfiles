@@ -1,0 +1,13 @@
+source "$(asdf direnv hook asdf)"
+
+use_java() {
+  local java_vesion=$1
+
+  export SDKMAN_DIR="$HOME/.sdkman"
+
+  sdk_init="${SDKMAN_DIR}/bin/sdk-init.sh"
+  if [[ -e $sdk_init ]]; then
+    source $sdk_init
+    sdk use java $java_vesion
+  fi
+}
