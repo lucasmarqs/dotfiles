@@ -64,6 +64,7 @@ compinit
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # FZF
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git'
 [[  -f /usr/share/fzf/shell/key-bindings.zsh ]] && source /usr/share/fzf/shell/key-bindings.zsh
 
 # direnv settings
