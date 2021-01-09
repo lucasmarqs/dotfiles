@@ -14,7 +14,8 @@ sudo dnf install \
   the_silver_searcher \
   ripgrep \
   httpie \
-  git-delta
+  git-delta \ 
+  mycli
 
 
 # asdf dependencies
