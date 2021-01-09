@@ -72,5 +72,35 @@ eval "$(asdf exec direnv hook zsh)"
 direnv() { asdf exec direnv "$@"; }
 # end of direnv settings
 
+# k8s
+# if { (( ! $+commands[kubectl] )) }
+# then
+#   cat <<-EOF
+#     warning: kubectl is not installed
+
+#     follow the instructions:
+#     sudo dnf config-manager --add-repo https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+#     sudo rpm --import \
+#       https://packages.cloud.google.com/yum/doc/yum-key.gpg \
+#       https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+#     sudo dnf install kubectl
+#   EOF
+# fi
+
+
+export KREW_ROOT=$HOME/.krew
+path+=($KREW_ROOT/bin)
+# end of k8s
+
 # Aliases
 alias g='git'
+
+# export to sub-processes
+export PATH
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/lucasmarqs/.sdkman"
+if [[ ! -d ${SDKMAN_DIR} ]]; then
+  curl -s "https://get.sdkman.io" | bash
+fi
+[[ -s "/home/lucasmarqs/.sdkman/bin/sdkman-init.sh" ]] && source "/home/lucasmarqs/.sdkman/bin/sdkman-init.sh"
