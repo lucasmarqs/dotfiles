@@ -38,6 +38,7 @@ Plug 'tmhedberg/SimpylFold'
 " Languages
 
 Plug 'sheerun/vim-polyglot'
+Plug 'uiiaoo/java-syntax.vim'
 
 " Markdown
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
@@ -128,6 +129,9 @@ set termguicolors
 " let base16colorspace=256
 colorscheme base16-solarflare
 " let g:airline_theme='base16_atelierforest'
+
+" disable highlighting variables for Java files
+highlight link JavaIdentifier NONE
 
 
 " -=====[ Mapping commands ]=====-
