@@ -22,7 +22,11 @@ vim-go-*
 # ASDF
 .toolsrc/
 .tool-versions
+
+# direnv
 .envrc
+.direnv/
+
 
 # Linters
 .tern-port

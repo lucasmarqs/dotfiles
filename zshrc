@@ -94,6 +94,16 @@ path+=($KREW_ROOT/bin)
 
 # Aliases
 alias g='git'
+alias rbbe='bundle exec'
+alias dockerc='docker-compose'
+
+# GO
+export GO111MODULE=on
+export GOBIN=$HOME/go/bin
+path+=($GOBIN)
+
+# RUST
+path+=(/home/lucasmarqs/.cargo/bin)
 
 # export to sub-processes
 export PATH

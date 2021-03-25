@@ -45,7 +45,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'mzlogin/vim-markdown-toc'
 
 " Go
-Plug 'fatih/vim-go' " Terraform
+Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 Plug 'hashivim/vim-terraform'
 
 " " Clojure
@@ -140,6 +140,7 @@ highlight link JavaIdentifier NONE
 nnoremap <tab> :tabnext<cr>
 nnoremap <s-tab> :tabprevious<cr>
 nnoremap <leader>n :tabnew<cr>
+nnoremap <leader>w :tabclose<cr>
 
 " NERDTree
 nnoremap <leader>\ :NERDTreeToggle<cr>
@@ -174,6 +175,9 @@ let g:go_highlight_fields = 1
 let g:go_highlight_functions = 1
 let g:go_highlight_function_calls = 1
 let g:go_highlight_operators = 1
+
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
 
 " default go file tab indent
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
