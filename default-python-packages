@@ -1,3 +1,4 @@
 pynvim
 black
 pylint
+pyright

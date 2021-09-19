@@ -1,6 +1,4 @@
 typescript
-coc-tsserver
-coc-eslint
-coc-tslint-plugin
-coc-rls
 neovim
+pyright
+typescript-language-server

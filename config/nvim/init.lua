@@ -24,6 +24,7 @@ require 'paq-nvim' {
   'hrsh7th/cmp-nvim-lsp';
   'saadparwaiz1/cmp_luasnip';
   'L3MON4D3/LuaSnip'; -- Snippets plugin
+  'lewis6991/gitsigns.nvim';             -- async git signs
 
   'christoomey/vim-system-copy';        -- system cliboard cp
   'tpope/vim-commentary';               -- better comments
@@ -37,6 +38,7 @@ require 'paq-nvim' {
 
 
   {'kyazdani42/nvim-web-devicons', opt = true}; -- required by nvim-tree + lualine
+  'nvim-lua/plenary.nvim'; -- required by gitsigns
 
   'wakatime/vim-wakatime'; -- tracking time
 }
@@ -77,6 +79,9 @@ require('lualine').setup {
     theme = "nightfox"
   }
 }
+
+-- Set git signs
+require('gitsigns').setup {}
 
 -- Remap , as leader
 g.mapleader = ','
@@ -222,7 +227,7 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'pyright' }
+local servers = { 'pyright', 'solargraph' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
