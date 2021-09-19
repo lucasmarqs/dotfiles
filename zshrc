@@ -1,10 +1,5 @@
 export EDITOR=nvim
-# Lines configured by zsh-newuser-install
-HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
 bindkey -v
-# End of lines configured by zsh-newuser-install
 
 # Base16 color themes
 BASE16_SHELL="$HOME/.config/base16-shell/"
@@ -34,6 +29,8 @@ zplug "zsh-users/zsh-history-substring-search"
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
+zplug "modules/history", from:prezto
+
 
 zplug load
 # End of zplug's Plugins
