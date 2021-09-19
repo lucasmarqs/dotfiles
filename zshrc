@@ -111,3 +111,6 @@ if [[ ! -d ${SDKMAN_DIR} ]]; then
   curl -s "https://get.sdkman.io" | bash
 fi
 [[ -s "/home/lucasmarqs/.sdkman/bin/sdkman-init.sh" ]] && source "/home/lucasmarqs/.sdkman/bin/sdkman-init.sh"
+
+# Source local configurations
+[[ -s "~/.local.zsh" ]] && source "~/.local.zsh" ]]
