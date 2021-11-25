@@ -9,7 +9,7 @@ if [ ! -d $BASE16_SHELL ]; then
 fi
 [ -n "$PS1" ] && [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
   eval "$("$BASE16_SHELL/profile_helper.sh")"
-base16_solarflare
+base16_onedark
 
 # End of base16 color themes
 
@@ -113,4 +113,4 @@ fi
 [[ -s "/home/lucasmarqs/.sdkman/bin/sdkman-init.sh" ]] && source "/home/lucasmarqs/.sdkman/bin/sdkman-init.sh"
 
 # Source local configurations
-[[ -s "~/.local.zsh" ]] && source "~/.local.zsh" ]]
+[[ -s "$HOME/.local.zsh" ]] && source "$HOME/.local.zsh"

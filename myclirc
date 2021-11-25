@@ -2,6 +2,6 @@
 
 [main]
 
-key_bindings = vi
+# key_bindings = vi
 
-syntax_style = monokai
+syntax_style = colorful

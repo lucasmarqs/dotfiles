@@ -12,7 +12,8 @@ end
 require 'paq-nvim' {
   'savq/paq-nvim';
 
-  'EdenEast/nightfox.nvim';             -- current theme
+  'EdenEast/nightfox.nvim';             -- a theme
+  'olimorris/onedarkpro.nvim';          -- current theme with light option
   'neovim/nvim-lspconfig';
   {'nvim-treesitter/nvim-treesitter', run = fn[':TSUpdate']};    -- syntax highlight
   'nvim-treesitter/nvim-treesitter-textobjects';
@@ -70,13 +71,25 @@ opt.updatetime = 250
 vim.wo.signcolumn = 'yes'
 
 -- Set colorscheme
+opt.background = 'dark'
 opt.termguicolors = true
-require('nightfox').set()
+local onedark = require('onedarkpro')
+onedark.setup {
+  options = {
+    bold = true, -- Use the themes opinionated bold styles?
+    italic = true, -- Use the themes opinionated italic styles?
+    underline = true, -- Use the themes opinionated underline styles?
+    undercurl = true, -- Use the themes opinionated undercurl styles?
+    cursorline = true, -- Use cursorline highlighting?
+    transparent = false, -- Use a transparent background?
+  }
+}
+onedark.load()
 
 -- Set statusbar
 require('lualine').setup {
   options = {
-    theme = "nightfox"
+    theme = 'onedark'
   }
 }
 
@@ -130,6 +143,8 @@ map('n', '<C-n>', ':Telescope live_grep<CR>')
 -- Nvim Tree configuration
 g.nvim_tree_ignore = { '.git', '.github' }
 g.nvim_tree_gitignore = 1
+
+require('nvim-tree').setup {}
 
 -- Add leader shortcuts
 map('n', '<leader>\\', ':NvimTreeToggle<CR>')

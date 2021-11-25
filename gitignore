@@ -26,6 +26,9 @@ vim-go-*
 # direnv
 .envrc
 .direnv/
+.env.vault # for the custom layout "vault"
+
+# .dir
 
 
 # Linters
