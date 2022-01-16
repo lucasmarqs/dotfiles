@@ -9,40 +9,41 @@ local function map(mode, lhs, rhs, opts)
   vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
-require 'paq-nvim' {
-  'savq/paq-nvim';
+require('packer').startup(function()
+  use 'wbthomason/packer.nvim'
 
-  'EdenEast/nightfox.nvim';             -- a theme
-  'olimorris/onedarkpro.nvim';          -- current theme with light option
-  'neovim/nvim-lspconfig';
-  {'nvim-treesitter/nvim-treesitter', run = fn[':TSUpdate']};    -- syntax highlight
-  'nvim-treesitter/nvim-treesitter-textobjects';
-  'nvim-telescope/telescope.nvim';      -- fuzzy finder
-  'nvim-lua/plenary.nvim';              -- required by telescope
-  'hoob3rt/lualine.nvim';               -- faster status line
-  'kyazdani42/nvim-tree.lua';           -- faster directory tree
-  'hrsh7th/nvim-cmp';                   -- completion plugin
-  'hrsh7th/cmp-nvim-lsp';
-  'saadparwaiz1/cmp_luasnip';
-  'L3MON4D3/LuaSnip'; -- Snippets plugin
-  'lewis6991/gitsigns.nvim';             -- async git signs
+  use 'EdenEast/nightfox.nvim';             -- a theme
+  use 'olimorris/onedarkpro.nvim';          -- current theme with light option
+  use 'neovim/nvim-lspconfig';
+  use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'};    -- syntax highlight
+  use 'nvim-treesitter/nvim-treesitter-textobjects';
+  use 'nvim-telescope/telescope.nvim';      -- fuzzy finder
+  use 'nvim-lua/plenary.nvim';              -- required by telescope
+  use 'hoob3rt/lualine.nvim';               -- faster status line
+  use 'kyazdani42/nvim-tree.lua';           -- faster directory tree
+  use 'hrsh7th/nvim-cmp';                   -- completion plugin
+  use 'hrsh7th/cmp-nvim-lsp';
+  use 'saadparwaiz1/cmp_luasnip';
+  use 'L3MON4D3/LuaSnip'; -- Snippets plugin
+  use 'lewis6991/gitsigns.nvim';             -- async git signs
 
-  'christoomey/vim-system-copy';        -- system cliboard cp
-  'tpope/vim-commentary';               -- better comments
-  'tpope/vim-fugitive';                 -- git commands
-  'tpope/vim-repeat';                   -- dot command
-  'tpope/vim-surround';                 -- parentheses, brackets, quotes, XML tags...
-  'mattn/emmet-vim';                    -- no pain html
+  use 'christoomey/vim-system-copy';        -- system cliboard cp
+  use 'tpope/vim-commentary';               -- better comments
+  use 'tpope/vim-fugitive';                 -- git commands
+  use 'tpope/vim-repeat';                   -- dot command
+  use 'tpope/vim-surround';                 -- parentheses, brackets, quotes, XML tags...
+  use 'mattn/emmet-vim';                    -- no pain html
 
-  {'iamcco/markdown-preview.nvim', run = fn['mkdp#util#install']}; -- preview markdown
-  'mzlogin/vim-markdown-toc'; -- create table of content in markdown
+  -- use {'iamcco/markdown-preview.nvim', run = fn['mkdp#util#install']}; -- preview markdown
+  use {'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
+  use 'mzlogin/vim-markdown-toc'; -- create table of content in markdown
 
 
-  {'kyazdani42/nvim-web-devicons', opt = true}; -- required by nvim-tree + lualine
-  'nvim-lua/plenary.nvim'; -- required by gitsigns
+  use {'kyazdani42/nvim-web-devicons', opt = true}; -- required by nvim-tree + lualine
+  use 'nvim-lua/plenary.nvim'; -- required by gitsigns
 
-  'wakatime/vim-wakatime'; -- tracking time
-}
+  use 'wakatime/vim-wakatime'; -- tracking time
+end)
 
 -- Set relative numbers
 opt.number = true
@@ -143,7 +144,6 @@ map('n', '<C-n>', ':Telescope live_grep<CR>')
 -- Nvim Tree configuration
 g.nvim_tree_ignore = { '.git', '.github' }
 g.nvim_tree_gitignore = 1
-
 require('nvim-tree').setup {}
 
 -- Add leader shortcuts
