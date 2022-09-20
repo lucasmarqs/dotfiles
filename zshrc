@@ -1,18 +1,6 @@
 export EDITOR=nvim
 bindkey -v
 
-# Base16 color themes
-BASE16_SHELL="$HOME/.config/base16-shell/"
-if [ ! -d $BASE16_SHELL ]; then
-  echo "Installing base16-shell colors"
-  git clone https://github.com/chriskempson/base16-shell.git $BASE16_SHELL
-fi
-[ -n "$PS1" ] && [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
-  eval "$("$BASE16_SHELL/profile_helper.sh")"
-base16_onedark
-
-# End of base16 color themes
-
 # zplug settings
 export ZPLUG_HOME="$HOME/.zplug"
 if [ ! -d "$ZPLUG_HOME" ]; then
@@ -24,6 +12,7 @@ fi
 
 
 # List of zplug's Plugins
+zplug "chriskempson/base16-shell", from:github
 zplug "romkatv/powerlevel10k", as:theme, depth:1
 zplug "zsh-users/zsh-history-substring-search"
 zplug "zsh-users/zsh-completions"
@@ -31,9 +20,12 @@ zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "modules/history", from:prezto
 
-
 zplug load
 # End of zplug's Plugins
+
+# Base16 color themes
+base16_onedark
+# End of base16 color themes
 
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down

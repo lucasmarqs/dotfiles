@@ -1,31 +1,33 @@
 Built with [rcm](https://github.com/thoughtbot/rcm)
 
-## packages
-
 ```sh
-sudo dnf install \
-  zsh \
-  kitty \
-  rcm \
-  neovim \
-  go \
-  fzf \
-  fd-find \
-  the_silver_searcher \
-  ripgrep \
-  httpie \
-  git-delta \ 
-  mycli
-
-
-# asdf dependencies
-dnf install make gcc zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel openssl-devel tk-devel libffi-devel
+rcup -d ~/.dotfiles -x README.md -v
 ```
 
-## asdf
+## arch setup
 
-Plugin list
+```
+# deps
 
-  * nodejs
-  * python
-  * direnv
+yay -S neovim rcm kitty fzf the_silver_searcher ripgrep httpie git-delta asdf-vm
+
+# zsh plugins
+zplug install
+
+# asdf deps
+# * ruby
+# * direnv
+# * nodejs
+# * python
+
+asdf plugin list all # get all available plugins
+asdf plugin add {plugin-name}
+asdf install direnv latest
+```
+
+## [packer](https://github.com/wbthomason/packer.nvim)
+
+```
+git clone --depth 1 https://github.com/wbthomason/packer.nvim\
+ ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+```
