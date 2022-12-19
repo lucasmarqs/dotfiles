@@ -18,14 +18,15 @@ require('packer').startup(function()
   use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'};    -- syntax highlight
   use 'nvim-treesitter/nvim-treesitter-textobjects';
   use 'nvim-telescope/telescope.nvim';      -- fuzzy finder
-  use 'nvim-lua/plenary.nvim';              -- required by telescope
+  use 'nvim-lua/plenary.nvim';              -- required by telescope, gitsigns
   use 'hoob3rt/lualine.nvim';               -- faster status line
   use 'kyazdani42/nvim-tree.lua';           -- faster directory tree
   use 'hrsh7th/nvim-cmp';                   -- completion plugin
   use 'hrsh7th/cmp-nvim-lsp';
-  use 'saadparwaiz1/cmp_luasnip';
-  use 'L3MON4D3/LuaSnip'; -- Snippets plugin
+  -- use 'saadparwaiz1/cmp_luasnip';
+  -- use 'L3MON4D3/LuaSnip'; -- Snippets plugin
   use 'lewis6991/gitsigns.nvim';             -- async git signs
+  use 'lukas-reineke/indent-blankline.nvim'  -- add indentation guides to all lines
 
   use 'christoomey/vim-system-copy';        -- system cliboard cp
   use 'tpope/vim-commentary';               -- better comments
@@ -40,10 +41,14 @@ require('packer').startup(function()
 
 
   use {'kyazdani42/nvim-web-devicons', opt = true}; -- required by nvim-tree + lualine
-  use 'nvim-lua/plenary.nvim'; -- required by gitsigns
 
   use 'wakatime/vim-wakatime'; -- tracking time
+
+  use 'slim-template/vim-slim'; -- syntax highlighting for Slim lang
 end)
+
+-- disable mouse
+opt.mouse = ''
 
 -- Set relative numbers
 opt.number = true
@@ -142,9 +147,17 @@ map('n', '<C-p>', ':Telescope find_files<CR>')
 map('n', '<C-n>', ':Telescope live_grep<CR>')
 
 -- Nvim Tree configuration
-g.nvim_tree_ignore = { '.git', '.github' }
-g.nvim_tree_gitignore = 1
-require('nvim-tree').setup {}
+require('nvim-tree').setup {
+  filters = {
+    custom = { "^.git$" }
+  }
+}
+
+require("indent_blankline").setup {
+  -- for example, context is off by default, use this to turn it on
+  show_current_context = true,
+  show_current_context_start = true,
+}
 
 -- Add leader shortcuts
 map('n', '<leader>\\', ':NvimTreeToggle<CR>')
@@ -166,7 +179,7 @@ require('nvim-treesitter.configs').setup {
     },
   },
   indent = {
-    enable = true,
+    enable = false,
   },
   textobjects = {
     select = {
@@ -202,7 +215,6 @@ require('nvim-treesitter.configs').setup {
     },
   },
 }
-
 -- LSP configuration
 local nvim_lsp = require('lspconfig')
 -- Use an on_attach function to only map the following keys
@@ -236,15 +248,14 @@ local on_attach = function(client, bufnr)
   cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
 end
 
--- nvim-cmp supports additional completion capabilities
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+local capabilities = require('plugins.nvim-cmp').capabilities
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
 local servers = { 'pyright', 'solargraph' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
+    capabilities = capabilities,
     on_attach = on_attach,
     flags = {
       debounce_text_changes = 150,
@@ -261,52 +272,3 @@ require('lspconfig').tsserver.setup {
   filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
   root_dir = nvim_lsp.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
 }
-
--- luasnip setup
-local luasnip = require 'luasnip'
--- nvim-cmp configurations
-local cmp = require('cmp')
-cmp.setup {
-  snippet = {
-    expand = function(args)
-      luasnip.lsp_expand(args.body)
-    end,
-  },
-  mapping = {
-    ['<C-p>'] = cmp.mapping.select_prev_item(),
-    ['<C-n>'] = cmp.mapping.select_next_item(),
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.close(),
-    ['<CR>'] = cmp.mapping.confirm {
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    },
-    ['<Tab>'] = function(fallback)
-      if vim.fn.pumvisible() == 1 then
-        vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-n>', true, true, true), 'n')
-      elseif luasnip.expand_or_jumpable() then
-        vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-expand-or-jump', true, true, true), '')
-      else
-        fallback()
-      end
-    end,
-    ['<S-Tab>'] = function(fallback)
-      if vim.fn.pumvisible() == 1 then
-        vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-p>', true, true, true), 'n')
-      elseif luasnip.jumpable(-1) then
-        vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-jump-prev', true, true, true), '')
-      else
-        fallback()
-      end
-    end,
-  },
-  sources = {
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-  },
-}
-
--- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'

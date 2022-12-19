@@ -1,5 +1,3 @@
-source "$(asdf direnv hook asdf)"
-
 use_java() {
   local java_vesion=$1
 

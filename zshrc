@@ -55,6 +55,7 @@ compinit
 # FZF
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git'
 [[  -f /usr/share/fzf/shell/key-bindings.zsh ]] && source /usr/share/fzf/shell/key-bindings.zsh
+[[ -f /usr/share/fzf/key-bindings.zsh ]] && source /usr/share/fzf/key-bindings.zsh
 
 # direnv settings
 eval "$(asdf exec direnv hook zsh)"
@@ -85,6 +86,7 @@ path+=($KREW_ROOT/bin)
 alias g='git'
 alias rbbe='bundle exec'
 alias dockerc='docker-compose'
+alias o='xdg-open'
 
 # GO
 export GO111MODULE=on
@@ -106,3 +108,4 @@ fi
 
 # Source local configurations
 [[ -s "$HOME/.local.zsh" ]] && source "$HOME/.local.zsh"
+source "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"
