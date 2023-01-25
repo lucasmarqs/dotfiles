@@ -9,7 +9,7 @@ rcup -d ~/.dotfiles -x README.md -v
 ```
 # deps
 
-yay -S neovim rcm kitty fzf the_silver_searcher ripgrep httpie git-delta asdf-vm
+yay -S base-devel neovim rcm kitty fzf the_silver_searcher ripgrep httpie git-delta asdf-vm
 
 # zsh plugins
 zplug install
