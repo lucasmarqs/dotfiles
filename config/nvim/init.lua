@@ -35,9 +35,12 @@ require('packer').startup(function()
   use 'tpope/vim-surround';                 -- parentheses, brackets, quotes, XML tags...
   use 'mattn/emmet-vim';                    -- no pain html
 
-  -- use {'iamcco/markdown-preview.nvim', run = fn['mkdp#util#install']}; -- preview markdown
-  use {'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
   use 'mzlogin/vim-markdown-toc'; -- create table of content in markdown
+
+  use({
+    "iamcco/markdown-preview.nvim",
+    run = function() vim.fn["mkdp#util#install"]() end,
+  })
 
 
   use {'kyazdani42/nvim-web-devicons', opt = true}; -- required by nvim-tree + lualine
