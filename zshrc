@@ -99,13 +99,6 @@ path+=(/home/lucasmarqs/.cargo/bin)
 # export to sub-processes
 export PATH
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/home/lucasmarqs/.sdkman"
-if [[ ! -d ${SDKMAN_DIR} ]]; then
-  curl -s "https://get.sdkman.io" | bash
-fi
-[[ -s "/home/lucasmarqs/.sdkman/bin/sdkman-init.sh" ]] && source "/home/lucasmarqs/.sdkman/bin/sdkman-init.sh"
-
 # Source local configurations
 [[ -s "$HOME/.local.zsh" ]] && source "$HOME/.local.zsh"
 source "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"
