@@ -1,6 +1,15 @@
 export EDITOR=nvim
 bindkey -v
 
+# Homebrew configuration for MacOS
+if (( ! $+commands[brew] )); then
+  BREW_LOCATION='/opt/homebrew/bin/brew'
+  if [[ -x $BREW_LOCATION ]]; then
+    eval "$("$BREW_LOCATION" shellenv)"
+  fi
+  unset BREW_LOCATION
+fi
+
 # zplug settings
 export ZPLUG_HOME="$HOME/.zplug"
 if [ ! -d "$ZPLUG_HOME" ]; then
@@ -19,6 +28,7 @@ zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "modules/history", from:prezto
+zplug "plugins/asdf", from:oh-my-zsh
 
 zplug load
 # End of zplug's Plugins
@@ -31,16 +41,6 @@ bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
-
-# asdf settings
-if [ ! -d "$HOME/.asdf" ]; then
-  echo "Installing asdf..."
-  git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.0
-fi
-. $HOME/.asdf/asdf.sh
-fpath=(${ASDF_DIR}/completions $fpath)
-# end of asdf settings
-
 
 # The following lines were added by compinstall
 zstyle :compinstall filename '/home/lucasmarqs/.zshrc'
@@ -62,31 +62,15 @@ eval "$(asdf exec direnv hook zsh)"
 direnv() { asdf exec direnv "$@"; }
 # end of direnv settings
 
-# k8s
-# if { (( ! $+commands[kubectl] )) }
-# then
-#   cat <<-EOF
-#     warning: kubectl is not installed
-
-#     follow the instructions:
-#     sudo dnf config-manager --add-repo https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
-#     sudo rpm --import \
-#       https://packages.cloud.google.com/yum/doc/yum-key.gpg \
-#       https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
-#     sudo dnf install kubectl
-#   EOF
-# fi
-
-
-export KREW_ROOT=$HOME/.krew
-path+=($KREW_ROOT/bin)
-# end of k8s
-
 # Aliases
 alias g='git'
 alias rbbe='bundle exec'
 alias dockerc='docker-compose'
-alias o='xdg-open'
+if (( $+commands[xdg-open] )); then
+  alias o'=xdg-open'
+else
+  alias o='open'
+fi
 
 # GO
 export GO111MODULE=on
