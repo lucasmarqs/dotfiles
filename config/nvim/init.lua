@@ -45,7 +45,6 @@ require('packer').startup(function()
 
   use {'kyazdani42/nvim-web-devicons', opt = true}; -- required by nvim-tree + lualine
 
-  use 'wakatime/vim-wakatime'; -- tracking time
 
   use 'slim-template/vim-slim'; -- syntax highlighting for Slim lang
 end)
