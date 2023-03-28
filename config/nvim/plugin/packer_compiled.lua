@@ -104,6 +104,16 @@ _G.packer_plugins = {
     path = "/Users/lusmarques/.local/share/nvim/site/pack/packer/start/markdown-preview.nvim",
     url = "https://github.com/iamcco/markdown-preview.nvim"
   },
+  ["mason-lspconfig.nvim"] = {
+    loaded = true,
+    path = "/Users/lusmarques/.local/share/nvim/site/pack/packer/start/mason-lspconfig.nvim",
+    url = "https://github.com/williamboman/mason-lspconfig.nvim"
+  },
+  ["mason.nvim"] = {
+    loaded = true,
+    path = "/Users/lusmarques/.local/share/nvim/site/pack/packer/start/mason.nvim",
+    url = "https://github.com/williamboman/mason.nvim"
+  },
   ["nightfox.nvim"] = {
     loaded = true,
     path = "/Users/lusmarques/.local/share/nvim/site/pack/packer/start/nightfox.nvim",
@@ -179,11 +189,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/lusmarques/.local/share/nvim/site/pack/packer/start/vim-repeat",
     url = "https://github.com/tpope/vim-repeat"
-  },
-  ["vim-slim"] = {
-    loaded = true,
-    path = "/Users/lusmarques/.local/share/nvim/site/pack/packer/start/vim-slim",
-    url = "https://github.com/slim-template/vim-slim"
   },
   ["vim-surround"] = {
     loaded = true,

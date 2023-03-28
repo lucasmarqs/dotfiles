@@ -12,21 +12,44 @@ end
 require('packer').startup(function()
   use 'wbthomason/packer.nvim'
 
+  -- Themes
   use 'EdenEast/nightfox.nvim';             -- a theme
   use 'olimorris/onedarkpro.nvim';          -- current theme with light option
-  use 'neovim/nvim-lspconfig';
+
+  -- LSP
+  use {
+    "williamboman/mason.nvim",  -- LSP Package Manager
+    run = ":MasonUpdate",        -- :MasonUpdate updates registry contents
+    requires = {'williamboman/mason-lspconfig.nvim', 'neovim/nvim-lspconfig'}
+  };
+
+  -- tree-sitter
   use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'};    -- syntax highlight
   use 'nvim-treesitter/nvim-treesitter-textobjects';
-  use 'nvim-telescope/telescope.nvim';      -- fuzzy finder
-  use 'nvim-lua/plenary.nvim';              -- required by telescope, gitsigns
-  use 'hoob3rt/lualine.nvim';               -- faster status line
-  use 'kyazdani42/nvim-tree.lua';           -- faster directory tree
+
+  -- auto completion
   use 'hrsh7th/nvim-cmp';                   -- completion plugin
   use 'hrsh7th/cmp-nvim-lsp';
-  -- use 'saadparwaiz1/cmp_luasnip';
-  -- use 'L3MON4D3/LuaSnip'; -- Snippets plugin
-  use 'lewis6991/gitsigns.nvim';             -- async git signs
-  use 'lukas-reineke/indent-blankline.nvim'  -- add indentation guides to all lines
+
+  -- UI
+  use 'lukas-reineke/indent-blankline.nvim'                     -- add indentation guides to all lines
+  use {
+    'hoob3rt/lualine.nvim',                                     -- faster status line
+    requires = {{'kyazdani42/nvim-web-devicons', opt = true}}
+  }
+  use {
+    'kyazdani42/nvim-tree.lua',                                 -- faster directory tre
+    requires = {{'kyazdani42/nvim-web-devicons', opt = true}}
+  }
+  use {
+    'nvim-telescope/telescope.nvim',                            -- fuzzy finder
+    requires = {'nvim-lua/plenary.nvim'}
+  };
+  use {
+    'lewis6991/gitsigns.nvim',                                  -- async git signs
+    requires = {'nvim-lua/plenary.nvim'}
+  };
+
 
   use 'christoomey/vim-system-copy';        -- system cliboard cp
   use 'tpope/vim-commentary';               -- better comments
@@ -35,18 +58,12 @@ require('packer').startup(function()
   use 'tpope/vim-surround';                 -- parentheses, brackets, quotes, XML tags...
   use 'mattn/emmet-vim';                    -- no pain html
 
-  use 'mzlogin/vim-markdown-toc'; -- create table of content in markdown
+  use 'mzlogin/vim-markdown-toc';           -- create table of content in markdown
 
   use({
     "iamcco/markdown-preview.nvim",
     run = function() vim.fn["mkdp#util#install"]() end,
   })
-
-
-  use {'kyazdani42/nvim-web-devicons', opt = true}; -- required by nvim-tree + lualine
-
-
-  use 'slim-template/vim-slim'; -- syntax highlighting for Slim lang
 end)
 
 -- disable mouse
@@ -218,6 +235,17 @@ require('nvim-treesitter.configs').setup {
   },
 }
 -- LSP configuration
+local lsp_names = {
+  'tsserver',
+  'cssls',
+  'solargraph',
+  'pyright',
+  'lua_ls'
+}
+require('mason').setup()
+require('mason-lspconfig').setup {
+  ensure_installed = lsp_names,
+}
 local nvim_lsp = require('lspconfig')
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -254,8 +282,11 @@ local capabilities = require('plugins.nvim-cmp').capabilities
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'pyright', 'solargraph' }
-for _, lsp in ipairs(servers) do
+local servers = lsp_names
+for _, lsp in ipairs(lsp_names) do
+  if lsp == 'tsserver' then
+    goto continue
+  end
   nvim_lsp[lsp].setup {
     capabilities = capabilities,
     on_attach = on_attach,
@@ -263,6 +294,7 @@ for _, lsp in ipairs(servers) do
       debounce_text_changes = 150,
     }
   }
+  ::continue::
 end
 
 require('lspconfig').tsserver.setup {
