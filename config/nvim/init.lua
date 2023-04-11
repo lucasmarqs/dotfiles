@@ -3,11 +3,7 @@ local fn = vim.fn    -- to call Vim functions e.g. fn.bufnr()
 local g = vim.g      -- a table to access global variables
 local opt = vim.opt  -- to set options
 
-local function map(mode, lhs, rhs, opts)
-  local options = {noremap = true}
-  if opts then options = vim.tbl_extend('force', options, opts) end
-  vim.api.nvim_set_keymap(mode, lhs, rhs, options)
-end
+local map = require('tools.map')
 
 require('packer').startup(function()
   use 'wbthomason/packer.nvim'
@@ -28,8 +24,17 @@ require('packer').startup(function()
   use 'nvim-treesitter/nvim-treesitter-textobjects';
 
   -- auto completion
-  use 'hrsh7th/nvim-cmp';                   -- completion plugin
-  use 'hrsh7th/cmp-nvim-lsp';
+  use {
+     'hrsh7th/nvim-cmp',
+     'hrsh7th/cmp-nvim-lsp',
+     'hrsh7th/cmp-buffer',
+     'hrsh7th/cmp-path',
+  }
+  use {
+    {'L3MON4D3/LuaSnip', run = 'make install_jsregexp'},
+    'saadparwaiz1/cmp_luasnip',
+    'rafamadriz/friendly-snippets', -- VSCode snippets style
+  }
 
   -- UI
   use 'lukas-reineke/indent-blankline.nvim'                     -- add indentation guides to all lines
@@ -126,8 +131,6 @@ g.mapleader = ','
 g.maplocalleader = ','
 
 -- Set tab navigation shortcuts
-map('n', '<tab>', ':tabnext<CR>')
-map('n', '<s-tab>', ':tabprevious<CR>')
 map('n', '<leader>n', ':tabnew<CR>')
 map('n', '<leader>w', ':tabclose<CR>')
 
