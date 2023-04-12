@@ -1,5 +1,3 @@
-local cmd = vim.cmd  -- to execute Vim commands e.g. cmd('pwd')
-local fn = vim.fn    -- to call Vim functions e.g. fn.bufnr()
 local g = vim.g      -- a table to access global variables
 local opt = vim.opt  -- to set options
 
@@ -35,6 +33,8 @@ require('packer').startup(function()
     'saadparwaiz1/cmp_luasnip',
     'rafamadriz/friendly-snippets', -- VSCode snippets style
   }
+  -- Formatter
+  use 'mhartington/formatter.nvim';
 
   -- UI
   use 'lukas-reineke/indent-blankline.nvim'                     -- add indentation guides to all lines
@@ -69,6 +69,9 @@ require('packer').startup(function()
     "iamcco/markdown-preview.nvim",
     run = function() vim.fn["mkdp#util#install"]() end,
   })
+
+  -- Language specific plugins
+  use 'jose-elias-alvarez/typescript.nvim'
 end)
 
 -- disable mouse
@@ -300,12 +303,16 @@ for _, lsp in ipairs(lsp_names) do
   ::continue::
 end
 
-require('lspconfig').tsserver.setup {
-  on_attach = on_attach,
-  flags = {
-    debounce_text_changes = 150,
-  },
-  cmd = { "typescript-language-server", "--stdio" },
-  filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
-  root_dir = nvim_lsp.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
+require('typescript').setup {
+  server = {
+    on_attach = on_attach,
+    flags = {
+      debounce_text_changes = 150,
+    },
+    cmd = { "typescript-language-server", "--stdio" },
+    filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
+    root_dir = nvim_lsp.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
+  }
 }
+
+require('plugins.formatter')
