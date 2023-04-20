@@ -33,8 +33,8 @@ require('packer').startup(function()
     'saadparwaiz1/cmp_luasnip',
     'rafamadriz/friendly-snippets', -- VSCode snippets style
   }
-  -- Formatter
-  use 'mhartington/formatter.nvim';
+  -- Formatter && Code diagnostics
+  use 'jose-elias-alvarez/null-ls.nvim';
 
   -- UI
   use 'lukas-reineke/indent-blankline.nvim'                     -- add indentation guides to all lines
@@ -275,13 +275,11 @@ local on_attach = function(client, bufnr)
   map('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   map('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  map('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  map('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
   map('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
   map('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   map('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-  map('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-
-  cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
+  map('n', '<space>f', '<cmd>lua vim.lsp.buf.format()<CR>', opts)
 end
 
 local capabilities = require('plugins.nvim-cmp').capabilities
@@ -315,4 +313,4 @@ require('typescript').setup {
   }
 }
 
-require('plugins.formatter')
+require('plugins.null-ls')
