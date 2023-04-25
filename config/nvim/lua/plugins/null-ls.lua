@@ -41,8 +41,5 @@ null_ls.setup({
     null_ls.builtins.code_actions.eslint.with({
       prefer_local = 'node_modules/.bin',
     }),
-
-    -- Completion
-    null_ls.builtins.completion.luasnip,
   }
 })
