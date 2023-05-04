@@ -1,16 +1,6 @@
 local null_ls = require('null-ls')
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
-local typescript_organize_imports = {
-  method = null_ls.methods.FORMATTING,
-  filetypes = {'javascript', 'javascriptreact', 'typescript', 'typescriptreact'},
-  generator = {
-    fn = function ()
-      require('typescript').actions.organizeImports()
-    end
-  },
-}
-
 null_ls.setup({
   debug = true,
   on_attach = function (client, bufnr)
@@ -34,7 +24,6 @@ null_ls.setup({
     null_ls.builtins.formatting.prettier.with({
       prefer_local = 'node_modules/.bin',
     }),
-    typescript_organize_imports,
 
     -- Code Actions
     require('typescript.extensions.null-ls.code-actions'),
