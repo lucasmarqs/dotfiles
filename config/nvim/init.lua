@@ -34,7 +34,6 @@ require('packer').startup(function()
     'rafamadriz/friendly-snippets', -- VSCode snippets style
   }
   -- Formatter && Code diagnostics
-  use 'jose-elias-alvarez/null-ls.nvim';
 
   -- UI
   use 'lukas-reineke/indent-blankline.nvim'                     -- add indentation guides to all lines
@@ -69,9 +68,6 @@ require('packer').startup(function()
     "iamcco/markdown-preview.nvim",
     run = function() vim.fn["mkdp#util#install"]() end,
   })
-
-  -- Language specific plugins
-  use 'jose-elias-alvarez/typescript.nvim'
 end)
 
 -- disable mouse
@@ -89,7 +85,7 @@ opt.colorcolumn = '80'
 
 -- Show hidden chars
 opt.list = true
-opt.listchars = { eol = '¬', tab = '>~', trail = '.' }
+opt.listchars = { trail = '.' }
 
 -- Use spaces instead tabs with width of 2
 opt.expandtab = true
@@ -107,7 +103,11 @@ vim.wo.signcolumn = 'yes'
 opt.background = 'dark'
 opt.termguicolors = true
 local onedark = require('onedarkpro')
+local color = require('onedarkpro.helpers')
 onedark.setup {
+  colors = {
+    virtual_text_warning = color.lighten('yellow', 12, 'onedark'),
+  },
   options = {
     bold = true, -- Use the themes opinionated bold styles?
     italic = true, -- Use the themes opinionated italic styles?
@@ -178,11 +178,7 @@ require('nvim-tree').setup {
   }
 }
 
-require("indent_blankline").setup {
-  -- for example, context is off by default, use this to turn it on
-  show_current_context = true,
-  show_current_context_start = true,
-}
+require("ibl").setup()
 
 -- Add leader shortcuts
 map('n', '<leader>\\', ':NvimTreeToggle<CR>')
@@ -193,19 +189,20 @@ map('n', '<leader>f\\', ':NvimTreeFindFile<CR>')
 require('nvim-treesitter.configs').setup {
   highlight = {
     enable = true,
+    additional_vim_regex_highlighting = false,
   },
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = 'gnn',
-      node_incremental = 'grn',
-      scope_incremental = 'grc',
-      node_decremental = 'grm',
-    },
-  },
-  indent = {
-    enable = false,
-  },
+  -- incremental_selection = {
+  --   enable = true,
+  --   keymaps = {
+  --     init_selection = 'gnn',
+  --     node_incremental = 'grn',
+  --     scope_incremental = 'grc',
+  --     node_decremental = 'grm',
+  --   },
+  -- },
+  -- indent = {
+  --   enable = false,
+  -- },
   textobjects = {
     select = {
       enable = true,
@@ -218,29 +215,36 @@ require('nvim-treesitter.configs').setup {
         ['ic'] = '@class.inner',
       },
     },
-    move = {
-      enable = true,
-      set_jumps = true, -- whether to set jumps in the jumplist
-      goto_next_start = {
-        [']m'] = '@function.outer',
-        [']]'] = '@class.outer',
-      },
-      goto_next_end = {
-        [']M'] = '@function.outer',
-        [']['] = '@class.outer',
-      },
-      goto_previous_start = {
-        ['[m'] = '@function.outer',
-        ['[['] = '@class.outer',
-      },
-      goto_previous_end = {
-        ['[M'] = '@function.outer',
-        ['[]'] = '@class.outer',
-      },
-    },
+    -- move = {
+    --   enable = true,
+    --   set_jumps = true, -- whether to set jumps in the jumplist
+    --   goto_next_start = {
+    --     [']m'] = '@function.outer',
+    --     [']]'] = '@class.outer',
+    --   },
+    --   goto_next_end = {
+    --     [']M'] = '@function.outer',
+    --     [']['] = '@class.outer',
+    --   },
+    --   goto_previous_start = {
+    --     ['[m'] = '@function.outer',
+    --     ['[['] = '@class.outer',
+    --   },
+    --   goto_previous_end = {
+    --     ['[M'] = '@function.outer',
+    --     ['[]'] = '@class.outer',
+    --   },
+    -- },
   },
 }
 -- LSP configuration
+vim.diagnostic.config({
+  virtual_text = false,
+})
+vim.g.lsp_diagnostics_highlights_enabled = false
+vim.api.nvim_exec2('highlight DiagnosticUnderlineInfo guifg=Azure3', {})
+vim.api.nvim_exec2('highlight DiagnosticUnderlineWarn guifg=wheat', {})
+
 local lsp_names = require('configs').lsp_names
 
 require('mason').setup()
@@ -248,4 +252,3 @@ require('mason-lspconfig').setup {
   ensure_installed = lsp_names,
 }
 require('plugins.lspconfig')
-require('plugins.null-ls')

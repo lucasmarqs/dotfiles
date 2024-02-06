@@ -46,27 +46,3 @@ for _, lsp in ipairs(lsp_names) do
   }
   ::continue::
 end
-
-require('typescript').setup {
-  server = {
-    on_attach = function (client, bufnr)
-      vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-      keymaps()
-
-      -- Run CodeAction on save
-      local augroup = vim.api.nvim_create_augroup("TypescriptActions", {})
-      vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-      vim.api.nvim_create_autocmd("BufWrite", {
-        group = augroup,
-        buffer = bufnr,
-        command = 'TypescriptOrganizeImports!',
-      })
-    end,
-    flags = {
-      debounce_text_changes = 150,
-    },
-    cmd = { "typescript-language-server", "--stdio" },
-    filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
-    root_dir = nvim_lsp.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
-  }
-}

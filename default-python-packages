@@ -1,4 +1,4 @@
-pynvim
-black
-pylint
-pyright
+#pynvim
+#black
+#pylint
+#pyright

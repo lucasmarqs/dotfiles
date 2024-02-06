@@ -5,7 +5,7 @@ M.lsp_names = {
   'cssls',
   'solargraph',
   'pyright',
-  'lua_ls'
+  'lua_ls',
 }
 
 return M;

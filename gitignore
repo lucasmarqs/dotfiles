@@ -4,6 +4,10 @@
 # Ruby
 .ruby-version
 .ruby-gemset
+.bundler/
+
+# Rails
+storage/
 
 # Python
 .python-version
@@ -37,3 +41,7 @@ vim-go-*
 # Custom
 /my-notes/
 .notes/
+notes.txt
+
+# Hurl collections
+.http-collection

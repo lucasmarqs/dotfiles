@@ -21,13 +21,13 @@ fi
 
 
 # List of zplug's Plugins
-zplug "chriskempson/base16-shell", from:github
+zplug "chriskempson/base16-shell", from:github, lazy:off
 zplug "romkatv/powerlevel10k", as:theme, depth:1
-zplug "zsh-users/zsh-history-substring-search"
-zplug "zsh-users/zsh-completions"
-zplug "zsh-users/zsh-autosuggestions"
-zplug "zsh-users/zsh-syntax-highlighting", defer:2
-zplug "modules/history", from:prezto
+zplug "zsh-users/zsh-history-substring-search", lazy:off
+zplug "zsh-users/zsh-completions", lazy:off
+zplug "zsh-users/zsh-autosuggestions", lazy:off
+zplug "zsh-users/zsh-syntax-highlighting", lazy:off
+zplug "modules/history", from:prezto, lazy:off
 zplug "plugins/asdf", from:oh-my-zsh
 
 zplug load
@@ -53,10 +53,21 @@ compinit
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # FZF
-export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git'
+export FZF_CTRL_T_OPTS="
+  --preview 'bat -n --color=always {}'
+  --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 [[  -f /usr/share/fzf/shell/key-bindings.zsh ]] && source /usr/share/fzf/shell/key-bindings.zsh
 [[  -f /opt/homebrew/opt/fzf/shell/key-bindings.zsh ]] && source /opt/homebrew/opt/fzf/shell/key-bindings.zsh
 [[ -f /usr/share/fzf/key-bindings.zsh ]] && source /usr/share/fzf/key-bindings.zsh
+
+_fzf_compgen_path() {
+  fd --hidden --follow --exclude ".git" . "$1"
+}
+# Use fd to generate the list for directory completion
+_fzf_compgen_dir() {
+  fd --type d --hidden --follow --exclude ".git" . "$1"
+}
+
 
 # direnv settings
 eval "$(asdf exec direnv hook zsh)"
@@ -81,9 +92,22 @@ path+=($GOBIN)
 # RUST
 path+=(/home/lucasmarqs/.cargo/bin)
 
-# export to sub-processes
-export PATH
+# JAVA
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk-11.jdk/Contents/Home
+path+=($JAVA_HOME/bin)
 
 # Source local configurations
 [[ -s "$HOME/.local.zsh" ]] && source "$HOME/.local.zsh"
 source "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"
+
+export DOCKER_HOST='unix:///Users/lusmarques/.colima/default/docker.sock'
+
+# Nordic
+# export NORDIC_DOCTOR_DIR="$HOME/.nordic-doctor"
+# path+=($NORDIC_DOCTOR_DIR/bin)
+
+# libpq homebrew
+path+=(/opt/homebrew/opt/libpq/bin)
+
+# export to sub-processes
+export PATH

@@ -39,3 +39,8 @@
   ; side-by-side = true
 [credentials]
   helper = store
+[url "git@github.com:"]
+  insteadOf = https://github.com/
+[url "git@github.com-emu:melisource/"]
+	insteadOf = https://github.com/melisource/
+	insteadOf = git@github.com:melisource/
