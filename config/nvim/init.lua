@@ -34,6 +34,8 @@ require('packer').startup(function()
     'rafamadriz/friendly-snippets', -- VSCode snippets style
   }
   -- Formatter && Code diagnostics
+  use 'mhartington/formatter.nvim'
+  use 'mfussenegger/nvim-lint'
 
   -- UI
   use 'lukas-reineke/indent-blankline.nvim'                     -- add indentation guides to all lines
@@ -252,3 +254,5 @@ require('mason-lspconfig').setup {
   ensure_installed = lsp_names,
 }
 require('plugins.lspconfig')
+require('plugins.formatter')
+require('plugins.nvim-lint')

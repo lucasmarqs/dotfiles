@@ -26,14 +26,12 @@ end
 
 local nvim_lsp = require('lspconfig')
 local capabilities = require('plugins.nvim-cmp').capabilities
+local tsserver_commands = require('lsp_commands.tsserver')
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
 local lsp_names = require('configs').lsp_names
 for _, lsp in ipairs(lsp_names) do
-  if lsp == 'tsserver' then
-    goto continue
-  end
   nvim_lsp[lsp].setup {
     capabilities = capabilities,
     on_attach = function (client, bufnr)
@@ -44,5 +42,13 @@ for _, lsp in ipairs(lsp_names) do
       debounce_text_changes = 150,
     }
   }
-  ::continue::
+
+  if lsp == 'tsserver' then
+    nvim_lsp[lsp].commands = {
+      OrganizeImports = {
+        tsserver_commands.organize_imports,
+        description = "Organize imports",
+      }
+    }
+  end
 end
