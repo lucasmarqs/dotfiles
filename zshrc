@@ -29,6 +29,7 @@ zplug "zsh-users/zsh-autosuggestions", lazy:off
 zplug "zsh-users/zsh-syntax-highlighting", lazy:off
 zplug "modules/history", from:prezto, lazy:off
 zplug "plugins/asdf", from:oh-my-zsh
+zplug "skywind3000/z.lua"
 
 zplug load
 # End of zplug's Plugins
