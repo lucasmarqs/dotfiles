@@ -70,6 +70,8 @@ require('packer').startup(function()
     "iamcco/markdown-preview.nvim",
     run = function() vim.fn["mkdp#util#install"]() end,
   })
+
+  use 'voldikss/vim-floaterm'
 end)
 
 -- disable mouse
@@ -102,8 +104,9 @@ opt.updatetime = 250
 vim.wo.signcolumn = 'yes'
 
 -- Set colorscheme
-opt.background = 'dark'
+-- opt.background = 'dark'
 opt.termguicolors = true
+vim.cmd("colorscheme onelight")
 local onedark = require('onedarkpro')
 local color = require('onedarkpro.helpers')
 onedark.setup {
@@ -124,7 +127,7 @@ onedark.load()
 -- Set statusbar
 require('lualine').setup {
   options = {
-    theme = 'onedark'
+    theme = 'onelight'
   }
 }
 
@@ -175,9 +178,6 @@ map('n', '<C-n>', ':Telescope live_grep<CR>')
 
 -- Nvim Tree configuration
 require('nvim-tree').setup {
-  filters = {
-    custom = { "^.git$" }
-  }
 }
 
 require("ibl").setup()
@@ -256,3 +256,4 @@ require('mason-lspconfig').setup {
 require('plugins.lspconfig')
 require('plugins.formatter')
 require('plugins.nvim-lint')
+require('plugins.floaterm')

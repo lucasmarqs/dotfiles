@@ -2,12 +2,13 @@
 
 tap 'homebrew/cask-fonts'
 
-cask 'font-caskaydia-cove-nerd-font'
-cask 'spotify'
-cask 'rectangle'
-cask 'firefox'
-cask 'discord'
 cask 'android-platform-tools' # adb
+cask 'discord'
+cask 'firefox'
+cask 'font-caskaydia-cove-nerd-font'
+cask 'kitty'
+cask 'rectangle'
+cask 'spotify'
 
 brew 'asdf'
 brew 'neovim'

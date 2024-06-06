@@ -4,6 +4,14 @@ Built with [rcm](https://github.com/thoughtbot/rcm)
 rcup -d ~/.dotfiles -x README.md -v
 ```
 
+## macos setup
+
+```sh
+# get Brew from https://brew.sh/ then
+cd .dotfiles
+brew bundle
+```
+
 ## arch setup
 
 ```
@@ -14,15 +22,22 @@ yay -S base-devel neovim rcm kitty fzf the_silver_searcher ripgrep httpie git-de
 # zsh plugins
 zplug install
 
-# asdf deps
-# * ruby
+```
+
+## asdf
+
 # * direnv
+# * ruby
 # * nodejs
 # * python
 
-asdf plugin list all # get all available plugins
-asdf plugin add {plugin-name}
+asdf manages direnv:
+
+```sh
+asdf plugin add direnv
 asdf install direnv latest
+asdf global direnv $DIRENV_VERSION_INSTALLED
+asdf direnv setup --shell zsh --version $DIRENV_VERSION_INSTALLED
 ```
 
 ## [packer](https://github.com/wbthomason/packer.nvim)

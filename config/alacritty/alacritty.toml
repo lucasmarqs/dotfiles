@@ -1,0 +1,15 @@
+live_config_reload = false
+
+[font]
+normal = { family = "CaskaydiaCove Nerd Font", style = "Light" }
+size = 17.0
+
+[selection]
+save_to_clipboard = true
+
+[window]
+padding = { x = 12 }
+decorations_theme_variant = "Light"
+
+[colors.primary]
+background = "#fafafa"

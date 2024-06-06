@@ -19,7 +19,6 @@ fi
 . $ZPLUG_HOME/init.zsh
 # end of zplug settings
 
-
 # List of zplug's Plugins
 zplug "chriskempson/base16-shell", from:github, lazy:off
 zplug "romkatv/powerlevel10k", as:theme, depth:1
@@ -29,19 +28,31 @@ zplug "zsh-users/zsh-autosuggestions", lazy:off
 zplug "zsh-users/zsh-syntax-highlighting", lazy:off
 zplug "modules/history", from:prezto, lazy:off
 zplug "plugins/asdf", from:oh-my-zsh
+zplug "plugins/heroku", from:oh-my-zsh
 zplug "skywind3000/z.lua"
+
+if ! zplug check; then
+  zplug install
+fi
 
 zplug load
 # End of zplug's Plugins
 
 # Base16 color themes
-base16_onedark
+# base16_onedark
+base16_one-light
 # End of base16 color themes
 
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
+
+# heroku
+if type brew &>/dev/null
+then
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+fi
 
 # The following lines were added by compinstall
 zstyle :compinstall filename '/home/lucasmarqs/.zshrc'
@@ -84,6 +95,7 @@ if (( $+commands[xdg-open] )); then
 else
   alias o='open'
 fi
+alias heroku='TERM=xterm-256color heroku'
 
 # GO
 export GO111MODULE=on
@@ -102,10 +114,6 @@ path+=($JAVA_HOME/bin)
 source "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"
 
 export DOCKER_HOST='unix:///Users/lusmarques/.colima/default/docker.sock'
-
-# Nordic
-# export NORDIC_DOCTOR_DIR="$HOME/.nordic-doctor"
-# path+=($NORDIC_DOCTOR_DIR/bin)
 
 # libpq homebrew
 path+=(/opt/homebrew/opt/libpq/bin)
