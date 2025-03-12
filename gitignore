@@ -5,6 +5,8 @@
 .ruby-version
 .ruby-gemset
 .bundler/
+bin/brakeman
+bin/haml-lint
 
 # Rails
 storage/
@@ -45,3 +47,6 @@ notes.txt
 
 # Hurl collections
 .http-collection
+
+# Nexus does not use schema.rb
+db/schema.rb

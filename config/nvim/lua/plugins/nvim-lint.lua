@@ -54,6 +54,7 @@ lint.linters_by_ft = {
   typescript = {'eslint'},
   typescriptreact = {'eslint'},
   ruby = {'bundle_rubocop'},
+  json = {'jsonlint'},
 }
 
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {

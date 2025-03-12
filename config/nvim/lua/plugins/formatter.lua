@@ -1,6 +1,7 @@
 local util = require "formatter.util"
 
 local biome = require('formatter.defaults.biome')
+local terraform = require('formatter.filetypes.terraform')
 
 local function rubocop()
   return {
@@ -19,8 +20,9 @@ end
 
 require('formatter').setup {
   filetype = {
+    ruby = { rubocop },
+    terraform = { terraform.terraformfmt },
     typescript = { biome },
     typescriptreact = { biome },
-    ruby = { rubocop },
   }
 }

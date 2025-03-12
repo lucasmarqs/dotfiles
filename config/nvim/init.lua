@@ -53,6 +53,7 @@ require('packer').startup(function()
   };
   use {
     'lewis6991/gitsigns.nvim',                                  -- async git signs
+    version = '0.9.0',
     requires = {'nvim-lua/plenary.nvim'}
   };
 
@@ -72,6 +73,10 @@ require('packer').startup(function()
   })
 
   use 'voldikss/vim-floaterm'
+
+  use 'godlygeek/tabular'
+
+  use "zbirenbaum/copilot.lua"
 end)
 
 -- disable mouse
@@ -247,12 +252,11 @@ vim.g.lsp_diagnostics_highlights_enabled = false
 vim.api.nvim_exec2('highlight DiagnosticUnderlineInfo guifg=Azure3', {})
 vim.api.nvim_exec2('highlight DiagnosticUnderlineWarn guifg=wheat', {})
 
-local lsp_names = require('configs').lsp_names
-
 require('mason').setup()
 require('mason-lspconfig').setup {
-  ensure_installed = lsp_names,
+  ensure_installed = require('configs').mason_managed_lsps,
 }
+require('plugins.copilot')
 require('plugins.lspconfig')
 require('plugins.formatter')
 require('plugins.nvim-lint')

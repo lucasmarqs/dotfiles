@@ -1,11 +1,20 @@
 local M = {};
 
 M.lsp_names = {
-  'tsserver',
+  'ts_ls',
   'cssls',
-  'solargraph',
+  'ruby_lsp',
   'pyright',
   'lua_ls',
+  'terraformls',
+}
+
+M.mason_managed_lsps = {
+  'ts_ls',
+  'cssls',
+  'pyright',
+  'lua_ls',
+  'terraformls',
 }
 
 return M;

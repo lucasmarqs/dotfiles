@@ -27,7 +27,6 @@ zplug "zsh-users/zsh-completions", lazy:off
 zplug "zsh-users/zsh-autosuggestions", lazy:off
 zplug "zsh-users/zsh-syntax-highlighting", lazy:off
 zplug "modules/history", from:prezto, lazy:off
-zplug "plugins/asdf", from:oh-my-zsh
 zplug "plugins/heroku", from:oh-my-zsh
 zplug "skywind3000/z.lua"
 
@@ -80,10 +79,8 @@ _fzf_compgen_dir() {
   fd --type d --hidden --follow --exclude ".git" . "$1"
 }
 
-
 # direnv settings
-eval "$(asdf exec direnv hook zsh)"
-direnv() { asdf exec direnv "$@"; }
+eval "$(direnv hook zsh)"
 # end of direnv settings
 
 # Aliases
@@ -111,12 +108,15 @@ path+=($JAVA_HOME/bin)
 
 # Source local configurations
 [[ -s "$HOME/.local.zsh" ]] && source "$HOME/.local.zsh"
-source "${XDG_CONFIG_HOME:-$HOME/.config}/asdf-direnv/zshrc"
 
 export DOCKER_HOST='unix:///Users/lusmarques/.colima/default/docker.sock'
 
 # libpq homebrew
 path+=(/opt/homebrew/opt/libpq/bin)
+
+# asdf settings
+path=("${ASDF_DATA_DIR:-$HOME/.asdf}/shims" $path)
+# end of asdf settings
 
 # export to sub-processes
 export PATH

@@ -18,8 +18,8 @@ local keymaps = function()
   map('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
   map('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-  map('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-  map('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+  map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
   map('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   map('n', '<space>f', '<cmd>lua vim.lsp.buf.format()<CR>', opts)
 end
@@ -43,12 +43,14 @@ for _, lsp in ipairs(lsp_names) do
     }
   }
 
-  if lsp == 'tsserver' then
-    nvim_lsp[lsp].commands = {
-      OrganizeImports = {
-        tsserver_commands.organize_imports,
-        description = "Organize imports",
-      }
-    }
+  if lsp == 'ts_ls' then
+    vim.api.nvim_create_autocmd('LspAttach', {
+      callback = function(ev)
+        local client = vim.lsp.get_client_by_id(ev.data.client_id)
+        if client.name == "ts_ls" then
+          vim.api.nvim_create_user_command("LspOrganizeImports", tsserver_commands.organize_imports, {desc = 'Organize Imports'})
+        end
+      end
+    })
   end
 end

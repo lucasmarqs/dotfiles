@@ -1,3 +1,4 @@
+[general]
 live_config_reload = false
 
 [font]
@@ -10,6 +11,7 @@ save_to_clipboard = true
 [window]
 padding = { x = 12 }
 decorations_theme_variant = "Light"
+option_as_alt = "Both"
 
 [colors.primary]
 background = "#fafafa"
