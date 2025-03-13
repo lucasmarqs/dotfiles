@@ -1,56 +1,72 @@
-local map = require('tools.map')
+local lsp_names = {
+  'ts_ls',
+  'cssls',
+  'ruby_lsp',
+  'pyright',
+  'lua_ls',
+  'terraformls',
+}
 
-local keymaps = function()
-  -- Mappings.
-  local opts = { noremap=true, silent=true }
+local specialized_commands = {}
 
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
-  map('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  map('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  map('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  map('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  map('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  map('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-  map('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  map('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  map('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  map('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-  map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-  map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-  map('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-  map('n', '<space>f', '<cmd>lua vim.lsp.buf.format()<CR>', opts)
-end
-
-local nvim_lsp = require('lspconfig')
-local capabilities = require('plugins.nvim-cmp').capabilities
-local tsserver_commands = require('lsp_commands.tsserver')
-
--- Use a loop to conveniently call 'setup' on multiple servers and
--- map buffer local keybindings when the language server attaches
-local lsp_names = require('configs').lsp_names
-for _, lsp in ipairs(lsp_names) do
-  nvim_lsp[lsp].setup {
-    capabilities = capabilities,
-    on_attach = function (client, bufnr)
-      vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-      keymaps()
-    end,
-    flags = {
-      debounce_text_changes = 150,
-    }
+function specialized_commands.TS_organize_imports()
+  local params = {
+    command = "_typescript.organizeImports",
+    arguments = {vim.api.nvim_buf_get_name(0)},
   }
-
-  if lsp == 'ts_ls' then
-    vim.api.nvim_create_autocmd('LspAttach', {
-      callback = function(ev)
-        local client = vim.lsp.get_client_by_id(ev.data.client_id)
-        if client.name == "ts_ls" then
-          vim.api.nvim_create_user_command("LspOrganizeImports", tsserver_commands.organize_imports, {desc = 'Organize Imports'})
-        end
-      end
-    })
-  end
+  vim.lsp.buf.execute_command(params)
 end
+
+return {
+  {
+    'williamboman/mason.nvim',
+    lazy = false,
+    priority = 999,
+    opts = {
+      auto_install = true,
+    },
+  },
+  {
+    'williamboman/mason-lspconfig.nvim',
+    lazy = false,
+    priority = 998,
+    opts = {},
+  },
+  {
+    'neovim/nvim-lspconfig',
+    lazy = false,
+    config = function ()
+      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+      local lspconfig = require('lspconfig')
+
+      for _, lsp in ipairs(lsp_names) do
+        lspconfig[lsp].setup {
+          capabilities = capabilities,
+        }
+
+        if lsp == 'ts_ls' then
+          vim.api.nvim_create_autocmd('LspAttach', {
+            callback = function(ev)
+              local client = vim.lsp.get_client_by_id(ev.data.client_id)
+              if client.name == "ts_ls" then
+                vim.api.nvim_create_user_command("LspOrganizeImports", specialized_commands.TS_organize_imports, {desc = 'Organize Imports'})
+              end
+            end
+          })
+        end
+
+        vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
+        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {})
+        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, {})
+        vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, {})
+        vim.keymap.set('n', 'gr', vim.lsp.buf.references, {})
+        vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, {})
+        vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, {})
+        vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, {})
+        vim.keymap.set('n', '<space>[d', vim.diagnostic.goto_prev, {})
+        vim.keymap.set('n', '<space>]d', vim.diagnostic.goto_next, {})
+        vim.keymap.set('n', '<space>f', vim.lsp.buf.format, {})
+      end
+    end
+  }
+}

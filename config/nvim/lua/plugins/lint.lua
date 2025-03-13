@@ -1,5 +1,3 @@
-local lint = require('lint')
-
 local severity_map = {
   ['fatal'] = vim.diagnostic.severity.ERROR,
   ['error'] = vim.diagnostic.severity.ERROR,
@@ -48,17 +46,24 @@ local rubocop = {
   end,
 }
 
-lint.linters.bundle_rubocop = rubocop
+return {
+  'mfussenegger/nvim-lint',
+  config = function()
+    local lint = require('lint')
 
-lint.linters_by_ft = {
-  typescript = {'eslint'},
-  typescriptreact = {'eslint'},
-  ruby = {'bundle_rubocop'},
-  json = {'jsonlint'},
+    lint.linters.bundle_rubocop = rubocop
+
+    lint.linters_by_ft = {
+      typescript = {'eslint'},
+      typescriptreact = {'eslint'},
+      ruby = {'bundle_rubocop'},
+      json = {'jsonlint'},
+    }
+
+    vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+      callback = function()
+        lint.try_lint()
+      end,
+    })
+  end
 }
-
-vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-  callback = function()
-    lint.try_lint()
-  end,
-})

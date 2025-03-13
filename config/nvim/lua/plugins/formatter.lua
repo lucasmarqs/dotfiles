@@ -1,9 +1,6 @@
-local util = require "formatter.util"
-
-local biome = require('formatter.defaults.biome')
-local terraform = require('formatter.filetypes.terraform')
-
 local function rubocop()
+  local util = require('formatter.util')
+
   return {
     exe = "bin/rubocop",
     args = {
@@ -18,11 +15,16 @@ local function rubocop()
   }
 end
 
-require('formatter').setup {
-  filetype = {
-    ruby = { rubocop },
-    terraform = { terraform.terraformfmt },
-    typescript = { biome },
-    typescriptreact = { biome },
+return {
+  {
+    'mhartington/formatter.nvim',
+    opts = {
+      filetype = {
+        ruby = { rubocop },
+        terraform = { require('formatter.filetypes.terraform').terraformfmt },
+        typescript = { require('formatter.defaults.biome') },
+        typescriptreact = { require('formatter.defaults.biome') },
+      }
+    }
   }
 }
