@@ -99,10 +99,10 @@ _G.packer_plugins = {
     path = "/Users/lusmarques/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
-  ["copilot.lua"] = {
+  ["copilot.vim"] = {
     loaded = true,
-    path = "/Users/lusmarques/.local/share/nvim/site/pack/packer/start/copilot.lua",
-    url = "https://github.com/zbirenbaum/copilot.lua"
+    path = "/Users/lusmarques/.local/share/nvim/site/pack/packer/start/copilot.vim",
+    url = "https://github.com/github/copilot.vim"
   },
   ["emmet-vim"] = {
     loaded = true,

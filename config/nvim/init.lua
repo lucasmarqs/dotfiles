@@ -76,7 +76,7 @@ require('packer').startup(function()
 
   use 'godlygeek/tabular'
 
-  use "zbirenbaum/copilot.lua"
+  use "github/copilot.vim"
 end)
 
 -- disable mouse
