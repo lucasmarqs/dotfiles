@@ -24,6 +24,8 @@ return {
         terraform = { require('formatter.filetypes.terraform').terraformfmt },
         typescript = { require('formatter.defaults.biome') },
         typescriptreact = { require('formatter.defaults.biome') },
+        go = { require('formatter.filetypes.go').gofmt },
+
       }
     }
   }

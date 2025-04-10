@@ -1,10 +1,11 @@
 local lsp_names = {
-  'ts_ls',
   'cssls',
-  'ruby_lsp',
-  'pyright',
+  'gopls',
   'lua_ls',
+  'pyright',
+  'ruby_lsp',
   'terraformls',
+  'ts_ls',
 }
 
 local specialized_commands = {}

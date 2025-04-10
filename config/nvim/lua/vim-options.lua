@@ -12,7 +12,7 @@ vim.opt.cursorline = true
 vim.opt.colorcolumn = '80'
 
 -- Show hidden chars
-vim.opt.list = true
+vim.opt.list = false
 vim.opt.listchars = { trail = '.' }
 
 -- Use spaces instead tabs with width of 2
