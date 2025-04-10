@@ -12,7 +12,7 @@ return {
         sync_index = false,
         highlight = {
           enable = true,
-          -- additional_vim_regex_highlighting = false,
+          additional_vim_regex_highlighting = false,
         },
         textobjects = {
           select = {
@@ -22,6 +22,8 @@ return {
               ['if'] = '@function.inner',
               ['ac'] = '@class.outer',
               ['ic'] = '@class.inner',
+              ['ib'] = '@block.inner',
+              ['ab'] = '@block.outer',
             },
           },
         },

@@ -27,6 +27,7 @@ require("lazy").setup({
     -- import your plugins
     { import = "plugins" },
   },
+  install = { import = "onelight" },
   -- automatically check for plugin updates
   checker = { enabled = true },
 })
