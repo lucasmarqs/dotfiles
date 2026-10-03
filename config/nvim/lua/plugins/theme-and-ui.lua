@@ -3,22 +3,22 @@ return {
     'olimorris/onedarkpro.nvim',
     lazy = false,
     priority = 1000,
-    opts = {
-      colors = {
-        virtual_text_warning = require('onedarkpro.helpers').lighten('yellow', 12, 'onedark'),
-      },
-      options = {
-        bold = true,
-        italic = true,
-        underline = true,
-        undercurl = true,
-        cursorline = true,
-        transparent = false,
-      }
-    },
-    config = function()
+    config = function ()
+      require('onedarkpro').setup({
+        colors = {
+          virtual_text_warning = require('onedarkpro.helpers').lighten('yellow', 12, 'onedark'),
+        },
+        options = {
+          bold = true,
+          italic = true,
+          underline = true,
+          undercurl = true,
+          cursorline = true,
+          transparent = false,
+        }
+      })
       vim.cmd([[colorscheme onelight]])
-    end
+    end,
   },
   {
     'kyazdani42/nvim-tree.lua',
@@ -45,12 +45,24 @@ return {
     dependencies = { 'nvim-lua/plenary.nvim' }
   },
   {
+    'nvim-telescope/telescope-ui-select.nvim',
+  },
+  {
     'nvim-telescope/telescope.nvim',
-    opts = {},
     keys = {
       { '<C-p>', '<CMD>Telescope find_files<CR>' },
       { '<C-n>', '<CMD>Telescope live_grep<CR>' },
-    }
+    },
+    opts = {
+      extensions = {
+        ['ui-select'] = {
+          require('telescope.themes').get_dropdown({})
+        }
+      }
+    },
+    config = function ()
+      require('telescope').load_extension('ui-select')
+    end,
   },
   {
     "lukas-reineke/indent-blankline.nvim",

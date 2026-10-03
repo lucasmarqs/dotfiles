@@ -18,15 +18,16 @@ end
 return {
   {
     'mhartington/formatter.nvim',
-    opts = {
-      filetype = {
-        ruby = { rubocop },
-        terraform = { require('formatter.filetypes.terraform').terraformfmt },
-        typescript = { require('formatter.defaults.biome') },
-        typescriptreact = { require('formatter.defaults.biome') },
-        go = { require('formatter.filetypes.go').gofmt },
-
-      }
-    }
+    config = function()
+      require('formatter').setup({
+        filetype = {
+          ruby = { rubocop },
+          terraform = { require('formatter.filetypes.terraform').terraformfmt },
+          typescript = { require('formatter.defaults.biome') },
+          typescriptreact = { require('formatter.defaults.biome') },
+          go = { require('formatter.filetypes.go').gofmt, require("formatter.filetypes.go").goimports },
+        }
+      })
+    end,
   }
 }

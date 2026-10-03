@@ -2,8 +2,10 @@
 live_config_reload = false
 
 [font]
-normal = { family = "CaskaydiaCove Nerd Font", style = "Light" }
+normal = { family = "CaskaydiaCove Nerd Font Mono", style = "Light" }
 size = 17.0
+offset = { x = 0, y = 11 }
+glyph_offset = { x = 0, y = 6 }
 
 [selection]
 save_to_clipboard = true
@@ -13,5 +15,10 @@ padding = { x = 12 }
 decorations_theme_variant = "Light"
 option_as_alt = "Both"
 
-[colors.primary]
-background = "#fafafa"
+# [colors.primary]
+# background = "#fafafa"
+
+[[keyboard.bindings]]
+key = "Return"
+mods = "Shift"
+chars = "\u001B\r"

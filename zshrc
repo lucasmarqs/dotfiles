@@ -2,13 +2,13 @@ export EDITOR=nvim
 bindkey -v
 
 # Homebrew configuration for MacOS
-if (( ! $+commands[brew] )); then
-  BREW_LOCATION='/opt/homebrew/bin/brew'
-  if [[ -x $BREW_LOCATION ]]; then
-    eval "$("$BREW_LOCATION" shellenv)"
-  fi
-  unset BREW_LOCATION
-fi
+# if (( ! $+commands[brew] )); then
+#   BREW_LOCATION='/opt/homebrew/bin/brew'
+#   if [[ -x $BREW_LOCATION ]]; then
+#     eval "$("$BREW_LOCATION" shellenv)"
+#   fi
+#   unset BREW_LOCATION
+# fi
 
 # zplug settings
 export ZPLUG_HOME="$HOME/.zplug"
@@ -40,6 +40,7 @@ zplug load
 # Base16 color themes
 # base16_onedark
 base16_one-light
+# base16_gruvbox-light-hard
 # End of base16 color themes
 
 bindkey '^[[A' history-substring-search-up
@@ -62,6 +63,10 @@ compinit
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# bat
+export BAT_THEME=gruvbox-light
+# end bat
 
 # FZF
 export FZF_CTRL_T_OPTS="
@@ -109,7 +114,8 @@ path+=($JAVA_HOME/bin)
 # Source local configurations
 [[ -s "$HOME/.local.zsh" ]] && source "$HOME/.local.zsh"
 
-export DOCKER_HOST='unix:///Users/lusmarques/.colima/default/docker.sock'
+# colima stuff
+# export DOCKER_HOST='unix:///Users/lusmarques/.colima/default/docker.sock'
 
 # libpq homebrew
 path+=(/opt/homebrew/opt/libpq/bin)

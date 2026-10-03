@@ -30,17 +30,14 @@
   diffFilter = delta --color-only
 [pull]
   rebase = true
-; [url "git@github.com:"]
-;   insteadOf = https://github.com/
 
 [delta]
-  syntax-theme = gruvbox-dark
+  ; syntax-theme = gruvbox-dark
+  syntax-theme = gruvbox-light
+  light = true
   line-numbers = true
   ; side-by-side = true
 [credentials]
   helper = store
 [url "git@github.com:"]
   insteadOf = https://github.com/
-[url "git@github.com-emu:melisource/"]
-	insteadOf = https://github.com/melisource/
-	insteadOf = git@github.com:melisource/

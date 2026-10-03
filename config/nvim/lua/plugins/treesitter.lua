@@ -1,13 +1,23 @@
 return {
-  { 'nvim-treesitter/nvim-treesitter-textobjects' },
+  {
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    branch = 'main',
+    init = function ()
+      -- Disable entire built-in ftplugin mappings to avoid conflicts.
+      -- See https://github.com/neovim/neovim/tree/master/runtime/ftplugin for built-in ftplugins.
+      vim.g.no_plugin_maps = true
+    end,
+    config = function ()
+      require("nvim-treesitter-textobjects").setup({})
+    end
+  },
   {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
-    lazy = false,
+    branch = 'main',
+    -- lazy = false,
     config = function()
-      local configs = require("nvim-treesitter.configs")
-
-      configs.setup({
+      require("nvim-treesitter").setup({
         ensure_installed = { 'ruby', 'typescript', 'css', 'html', 'lua', 'json', 'yaml', 'go' },
         sync_index = false,
         highlight = {

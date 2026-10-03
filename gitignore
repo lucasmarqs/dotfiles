@@ -50,3 +50,9 @@ notes.txt
 
 # Nexus does not use schema.rb
 db/schema.rb
+
+.claude/
+ai-plans/
+ai-catalog/
+ai-scripts/
+ai-tasks/
