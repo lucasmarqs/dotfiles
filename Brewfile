@@ -8,6 +8,7 @@ cask 'discord'
 cask 'font-caskaydia-cove-nerd-font'
 # cask 'kitty'
 cask 'rectangle'
+cask 'antigravity-cli'
 # cask 'spotify'
 
 brew 'asdf'

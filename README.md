@@ -1,48 +1,33 @@
-Built with [rcm](https://github.com/thoughtbot/rcm)
+# Dotfiles
 
-```sh
-rcup -d ~/.dotfiles -x README.md -v
-```
+Built with [rcm](https://github.com/thoughtbot/rcm).
 
-## macos setup
+## Getting Started
 
-```sh
-# get Brew from https://brew.sh/ then
-cd .dotfiles
-brew bundle
-```
+1. **Install required dependency by hand:**
+   - [Homebrew](https://brew.sh/)
 
-## arch setup
+2. **Link dotfiles:**
+   Clone this repo to `~/.dotfiles`, then run:
+   ```sh
+   brew install rcm
+   rcup -d ~/.dotfiles -x README.md -v
+   ```
 
-```
-# deps
+3. **Install everything else:**
+   ```sh
+   cd ~/.dotfiles
+   brew bundle
+   ```
 
-yay -S base-devel neovim rcm kitty fzf the_silver_searcher ripgrep httpie git-delta asdf-vm
+## What else you need to know
 
-# zsh plugins
-zplug install
-
-```
-
-## asdf
-
-# * direnv
-# * ruby
-# * nodejs
-# * python
-
-asdf manages direnv:
-
-```sh
-asdf plugin add direnv
-asdf install direnv latest
-asdf global direnv $DIRENV_VERSION_INSTALLED
-asdf direnv setup --shell zsh --version $DIRENV_VERSION_INSTALLED
-```
-
-## [packer](https://github.com/wbthomason/packer.nvim)
-
-```
-git clone --depth 1 https://github.com/wbthomason/packer.nvim\
- ~/.local/share/nvim/site/pack/packer/start/packer.nvim
-```
+- **Zsh Plugins:** Handled automatically by `zplug` upon starting your shell for the first time.
+- **Language Runtimes:** Managed via `asdf`. You will need to install the plugins and runtimes manually (e.g., `ruby`, `nodejs`, `python`):
+  ```sh
+  asdf plugin add ruby
+  asdf plugin add nodejs
+  asdf plugin add python
+  # Then install your preferred versions
+  ```
+- **Included Configurations:** Includes configurations for Neovim, Alacritty, Zellij, and Git.
