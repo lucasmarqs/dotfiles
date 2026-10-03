@@ -21,7 +21,6 @@ fi
 
 # List of zplug's Plugins
 zplug "chriskempson/base16-shell", from:github, lazy:off
-zplug "romkatv/powerlevel10k", as:theme, depth:1
 zplug "zsh-users/zsh-history-substring-search", lazy:off
 zplug "zsh-users/zsh-completions", lazy:off
 zplug "zsh-users/zsh-autosuggestions", lazy:off
@@ -62,7 +61,10 @@ compinit
 # End of lines added by compinstall
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# starship begin
+eval "$(starship init zsh)"
+# starship end
 
 # bat
 export BAT_THEME=gruvbox-light

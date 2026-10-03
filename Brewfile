@@ -1,14 +1,14 @@
 # Run `brew bundle` to install from this file
 
-tap 'homebrew/cask-fonts'
+# tap 'homebrew/cask-fonts'
 
-cask 'android-platform-tools' # adb
+# cask 'android-platform-tools' # adb
 cask 'discord'
-cask 'firefox'
+# cask 'firefox'
 cask 'font-caskaydia-cove-nerd-font'
-cask 'kitty'
+# cask 'kitty'
 cask 'rectangle'
-cask 'spotify'
+# cask 'spotify'
 
 brew 'asdf'
 brew 'neovim'
@@ -21,8 +21,9 @@ brew 'git-delta'
 brew 'zplug'
 brew 'libpq'
 brew 'zsh'
-brew 'colima'
 brew 'jq'
 brew 'fd'
 brew 'starship'
-brew 'scrcpy' # screen copy - mirrors Android devices
+brew 'zellij'
+brew 'direnv'
+# brew 'scrcpy' # screen copy - mirrors Android devices
